@@ -1,10 +1,11 @@
 import User from "../models/User"
 import { Mongoose } from "mongoose"
+import Joi from 'joi'
 import  { UserInputError } from 'apollo-server-express'
-
+import { signup } from '../validator'
 export default {
     Query: {
-        users: (root, {  id }, ctx, info) => {
+        users: (root, { id }, ctx, info) => {
           // Test If User is authenticated,
           // projection . populate
           //pagination
@@ -18,9 +19,9 @@ export default {
         }
     },
     Mutation: {
-        signUp: (root, args, ctx, info) => {
+        signUp: async (root, args, ctx, info) => {
             // check if user not authenticated
-
+            await Joi.validate(args, signup, { abortEarly: false })
              //validation In the argument
              
     
