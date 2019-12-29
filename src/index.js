@@ -3,14 +3,16 @@ import express  from 'express'
 import typeDefs from './typeDefs'
 import resolvers from './resolvers'
 import connectDB  from './config/db'
-
+import schemaDirectives from './directives'
 const app = express()
 
 app.disable('x-powred-by');
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  playground: true
+  schemaDirectives,
+  playground: true,
+  context: ({ req, res }) => ({ req, res })
 });
 
 server.applyMiddleware({ app });

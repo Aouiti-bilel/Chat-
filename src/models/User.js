@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema} from 'mongoose'
 import { hash } from 'bcryptjs'
 import { UserInputError } from 'apollo-server-express'
 const userSchema = new mongoose.Schema({
@@ -17,7 +17,11 @@ const userSchema = new mongoose.Schema({
       } 
     } ,
     name: String,
-    password: String
+    password: String,
+    chats: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Chat'
+    }]
 }, { timestamps: true })
 
 userSchema.pre('save', async function(next){
